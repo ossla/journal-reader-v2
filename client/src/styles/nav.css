@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Sono:wght@400&display=swap');
+
+*, *::after, *::before {
+    padding: 0;
+    margin: 0;
+}
+
+/* КОНТЕЙНЕРЫ */
+
+/* внешний контейнер */
+.navBar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 30;
+}
+
+.navBar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #393E46;
+    box-shadow: 0 2px 14px #000;
+    z-index: 2;
+}
+
+/* промежуточный */
+.navContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 10px;
+}
+
+/* внутренний (отступы справа и слева)*/
+.navBody {
+    /* контент поверх */
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px;
+}
+
+/* КОНТЕНТ */
+
+/* лого */
+.navLogo > a{
+    position: relative;
+    text-decoration: none;
+    font-family: 'Sono', sans-serif !important;
+    font-size: calc(25px + 0.5vw);
+    line-height: 1.7em;
+    cursor: pointer;
+    color: #eeee;
+    transition: 0.2s;
+    z-index: 2;
+} .navBar .navLogo a:hover {
+    text-shadow: 3px 3px #00acb554;
+}
+/* меню */
+.navMenu {
+    position: relative;
+    z-index: 2;
+}
+
+/* иконка избранного */
+.navIconHeart {
+    margin-left: 2vw;
+    width: 26px;
+    filter: brightness(0) invert(1);
+} .navIconHeart:hover {
+    /* https://codepen.io/sosuke/pen/Pjoqqp */
+    filter: invert(44%) sepia(41%) saturate(1854%) hue-rotate(147deg) brightness(100%) contrast(104%);
+}
+
+
+/* текст (войти, выйти, профиль) */
+.navText {
+    text-decoration: none;
+    text-transform: uppercase;
+    margin-left: 2vw;
+    color: #eeee;
+} .navText:hover {
+    color: #00ADB5;
+}
+
+
+/* бургер */
+.navBurger {
+    display: none
+}
+@media (max-width: 767px) {
+    .navBody {
+        height: 50px;
+        padding: 0;
+    }
+
+    .navBurger {
+        position: relative;
+        display: block;
+        width: 30px;
+        height: 20px;
+        z-index: 40;
+        cursor: pointer;
+    }
+
+    .navBurger span {
+        position: absolute;
+        background-color: #fff;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        left: 0;
+        top: 9px;
+    }
+
+    .navBurger::before, .navBurger::after {
+        content: '';
+        background-color: #fff;
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        left: 0;
+        transition: 0.2s;
+    }
+
+    .navBurger::before {
+        top: 0;
+    }
+
+    .navBurger::after {
+        bottom: 0;   
+    }
+
+    /* active */
+    .navBurger.navBurgerActive::before {
+        top: 9px;
+        transform: rotate(45deg);
+    }
+
+    .navBurger.navBurgerActive::after {
+        top: 9px;
+        transform: rotate(-45deg)
+    }
+
+    .navBurger.navBurgerActive span{
+        transform: scale(0);
+    }
+
+    .navMenu {
+        overflow: auto;
+        position: fixed;
+        transition: all 0.3s ease 0s;
+        z-index: 1;
+        top: -100%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #393E46;
+        padding: 70px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .navMenu.navBurgerActive {
+        top: 0;
+    }
+
+    .navText {
+        margin: 20px 10px;
+        display: block;
+    }
+
+    .navIconHeart {
+        margin: 20px 10px;
+        width: 36px;
+        display: inline
+    }
+
+    .navHeart {
+        text-decoration: none;
+    }
+
+    .navText {
+        font-size: 1.5em;
+    }
+}

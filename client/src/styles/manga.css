@@ -1,0 +1,180 @@
+/* pages/Manga, components/MangaItem (только блок info) */
+
+*, *::after, *::before {
+    padding: 0;
+    margin: 0;
+}
+
+.mangaContainer {
+    width: 90%;
+    margin: auto;
+    margin-bottom: 400px;
+}
+
+.mangaPage {
+    display: flex;
+    padding: 4vw;
+}
+
+.cover {
+    width: 22vw;
+    min-width: 245px !important;
+    height: 30vw;
+    min-height: 325px;
+    padding-right: 30px;
+}
+
+/* на стороне обложки (под и около(мобильн. разреш.)) в Manga */
+.belongsToImg {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 24px 0;
+    width: 19.5vw;
+}
+
+.belongsToImgContainer {
+    display: block;
+}
+
+.like {
+    width: 3vw;
+    min-width: 40px;
+    height: 3vw;
+    min-height: 40px;
+    cursor: pointer;
+    filter: brightness(0) invert(1);
+    margin-right: 20px
+}
+.like.active {
+    filter: invert(26%) sepia(96%) saturate(6645%) hue-rotate(355deg) brightness(92%) contrast(121%);
+}
+
+.dropdownContent {
+    max-height: 120px;
+    overflow-y: scroll;
+}
+
+/* about manga - контейнер правой стороны (title, info, description) */
+.aboutManga {
+    padding-left: 30px;
+    border-left: 1px solid #eeee;
+}
+
+.title {
+    font-size: calc(46px + 1vw);
+    padding-bottom: 10px;
+}
+
+.info {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    font-size: 1em;
+}
+
+.description {
+    width: 100%;
+    max-width: 700px;
+    margin-top: 30px;
+}
+
+.coverContainer {
+    display: inline-block;
+}
+
+/* components/Content */
+
+.chapters_border {
+    border-top: 1vw dotted #00ADB5;
+    width: 4vw;
+    margin: 5vw auto 2vw auto;
+}
+.chapters_content {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    color: #eee;
+
+    text-decoration: none;
+    font-size: calc(11px + 0.5vw);
+}
+
+@media (max-width: 767px) {
+    .mangaPage {
+        display: block;
+    }
+    .aboutManga {
+        border-left: none;
+        padding: 0;
+        padding-top: 30px;
+    }
+    .title {
+        font-size: 2.5em;
+    }
+    .like {
+        margin: 0;
+        margin-bottom: 30px
+    }
+    .belongsToImgContainer {
+        display: inline-block;
+        margin-left: 20px;
+    }
+    .belongsToImg {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media (max-width: 460px) {
+    .belongsToImgContainer {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cover {
+        margin: 0;
+        padding: 0;
+    }
+    .coverContainer {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+/* Развернуть - Свернуть description (в pages/Manga) */
+.expand {
+    margin-left: 3px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* rating */
+.rating {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.stars_container {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+} 
+
+.star_block {
+    display: flex;
+    align-items: center;
+    margin: 0 2px;
+}
+
+.star {
+    width: 20px;
+    height: 20px;
+    filter: invert(41%) sepia(7%) saturate(517%) hue-rotate(180deg) brightness(96%) contrast(88%);
+}
+
+.on .star {
+    filter: invert(46%) sepia(70%) saturate(879%) hue-rotate(141deg) brightness(94%) contrast(101%);
+}

@@ -1,0 +1,8 @@
+export const ADMIN_PATH = '/admin'
+export const CHAPTER_PATH = '/chapters'
+export const FAVORITES_PATH = '/favorites'
+export const LOGIN_PATH = '/login'
+export const MAIN_PATH = '/'
+export const MANGA_PATH = '/manga'
+export const REGISTRATION_PATH = '/registration'
+export const PROFILE_PATH = '/user'

@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Sono:wght@400&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #222831;
+  color: #eeee;
+}
+
+/* Catalog */
+.catalog {
+  margin-top: 3vw;
+  margin-right: 4vw;
+  margin-left: 4vw;
+}
+.customRow {
+  width: 100%;
+}
+
+/* MangaItem */
+.mangaItem {
+  color: #eeee !important;
+  margin-bottom: 3vw;
+  display: flex;
+}
+.mangaLink {
+  text-decoration: none;
+  color: #eeee
+}
+
+.customImage {
+  width: 15vw;
+  height: 22vw;
+  min-width: 150px;
+  min-height: 220px;
+  margin-bottom: 3vw;
+}
+
+.mangaInfo {
+  padding: 0;
+  margin: 0;
+  margin-left: 3vw;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+}
+
+.mangaTitle {
+  font-size: calc(16px + 1.5vw);
+}
+
+.mangaRating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.mangaRating .ratingText {
+  margin: 0;
+  margin-right: 5px;
+}
+.mangaRating .starSvg {
+  width: 16px;
+  height :16px;
+  filter: brightness(0) invert(0.8);
+}
+
+@media (max-width: 1400px) {
+  .mangaDescription {
+    display: none
+  }
+}
+
+/* FilterBar */
+.filterBar {
+  padding: 4%;
+  border: 1px solid #00ADB5;
+  background-color: #393E46;
+  margin-right: 3vw;
+  margin-bottom: 3vw;
+  max-width: 500px;
+  min-height: 150px;
+  min-width: 150px;
+  height: fit-content;
+  white-space: initial;
+}
+.filterProperty {
+  margin-top: 5px;
+  margin-right: 5px;
+  border: none;
+  background-color: #222831;
+  color: #eeee;
+  padding: 3px;
+}
+.filterProp {
+  margin-bottom: 4%;
+}
+.filterIcon {
+  width: 26px;
+  filter: brightness(0) invert(1);
+  margin-bottom: 5%;
+}
+
+/* Auth (form)*/
+/* внешний контейнер */
+.formContainer {
+  margin-top: 5vw;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* внутренний (<Form>) */
+.form {
+  width: 100vw;
+  max-width: 700px;
+}
+.formElement {
+  margin-top: 10px;
+}
+.formTitle {
+  font-size: 1.8em;
+}
+.formEye {
+  width: 26px;
+  height: 23px;
+  filter: brightness(0) invert(1);
+  cursor: pointer;
+  margin-left: 30px;
+}
+.formPassword {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* текст под заполнителями, кнопка для авторизации */
+.formNavigate {
+  margin-top: 2vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.formNavigate span {
+  cursor: pointer;
+  border-bottom: 1px solid #00ADB5;
+}
+.formNavigate span:hover {
+  border-color: #eeee;
+}
+
+/* Page */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+/* pages/Chapter */
+
+.m_chapter {
+  width: 100vw; /* - 100% от порта */
+  margin: auto;
+}
+.m_page_container {
+  display: flex;
+  justify-content: center;
+  margin: 50px 0;
+}
+.m_one_page {
+  max-width: 90vw;
+}
+
+/* components/ChapterNav */
+
+.chapterNav {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  max-width: 90vw;
+  margin: 20px auto;
+}
+
+.chapterNavButton {
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #393E46;
+}
+.chapterNavButton:hover {
+  background-color: #4e555f
+}
+
+.chapterNavContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nextTriangle, .prevTriangle {
+  display: inline-block;
+
+  width: 0; 
+  height: 0; 
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 25px solid #eeee;
+  margin: 10px;
+}
+
+.prevTriangle {
+  rotate: -90deg;
+}
+.nextTriangle {
+  rotate: 90deg;
+}
+
+.chapterNavText {
+  margin: 0;
+  font-size: calc(14px + 1vw)
+}
+
+@media (max-width: 767px) {
+  .chapterNavText {
+    display: none;
+  }
+  .chapterNavButton.Prev {
+    justify-content: flex-start;    
+  }
+  .chapterNavButton.Next {
+    justify-content: flex-end;    
+  }
+}
+
+/* components/adminComponents */
+
+
+
+/* components/adminComponents/CreateManga */
+
+.create_magna_years_container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+}
+
+/* pages/Favorites */
+.favorites_container {
+  border-left: 1px solid #eeee;
+}
+
+.favorites_block {
+  margin: auto;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.favorites_col {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.favorites_name {
+  text-decoration: none;
+  color: #eeee;
+  font-size: calc(16px + 0.5vw)
+}

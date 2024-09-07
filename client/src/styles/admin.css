@@ -1,0 +1,103 @@
+.admin_header {
+    text-align: center;
+    margin: 20px;
+    font-size: calc(16px + 1.5vw);
+}
+
+.admin_container {
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+.admin_input {
+    max-width: 60%;
+    min-width: 300px;
+}
+
+.creator_block {
+    background-color: #393E46;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 0 10px;
+    margin-bottom: 30px;
+}
+
+.creator_button {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    font-size: calc(16px + 0.5vw);
+    border-bottom: 1px solid #eee;
+    padding-right: 35px;
+} .creator_button:hover {
+    color: rgba(201, 198, 198, 0.933);
+    border: none
+}
+
+.button_animation_1, .button_animation_2 {
+    content: '';
+    position: absolute;
+    display: inline;
+    width: 20px;
+    height: 3px;
+    background-color: #eeee;
+    transition: 0.2s;
+    right: 2.5px;
+    top: 15px;
+}
+.button_animation_1 {
+    rotate: 90deg;
+}
+.button_animation_1.block_opened {
+    rotate: none;
+}
+
+.genres_input {
+    display: flex;
+    margin-top: 5px;
+}
+.genres_input input {
+    max-width: 60%;
+    min-width: 200px;
+    margin-right: 5px;
+}
+
+.create_block {
+    display:flex;
+    justify-content: flex-end;
+}
+
+.destroy_modal .modal-content {
+    color: #eeee;
+    background-color:#393E46 ;
+}
+
+.block_items_to_delete {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.item_to_delete {
+    cursor: pointer;
+    width: 80%;
+    text-align: center;
+    padding: 4px;
+    border: 1px dotted #eeee;
+    text-overflow: ellipsis;
+    
+    margin-top: 4px;
+}
+
+.info_sign {
+    width: 14px;
+    height: 11px;
+    margin-right: 5px;
+    filter: brightness(0) invert(0.8)
+}
+.info_text {
+    color: rgba(255, 255, 255, 0.247);
+    font-size: 13px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
