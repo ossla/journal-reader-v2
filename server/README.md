@@ -104,17 +104,17 @@
 #### /journals
 
 Genre entity:
-```json
+```
 {id: number, name: string}
 ```
 
 Author entity:
-```json
+```
 {id: number, name: string}
 ```
 
 Journal entity:
-```json
+```
 {
     id: number,
     status: string,
@@ -244,7 +244,7 @@ Journal entity:
 #### /chapters
 
 Chapter entity:
-```json
+```
 {
     id: number,                     
     name: string,                   // единственное не генерируется 
