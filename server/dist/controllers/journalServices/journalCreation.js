@@ -38,6 +38,7 @@ const author_entity_1 = require("../../entities/author.entity");
 const app_data_source_1 = require("../../app-data-source");
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const domain_1 = require("../../domain");
 function processGenres(genres) {
     return __awaiter(this, void 0, void 0, function* () {
         let genresArr = new Array();
@@ -85,7 +86,7 @@ exports.processAuthors = processAuthors;
 function makeFolder(title, coverImg) {
     return __awaiter(this, void 0, void 0, function* () {
         // создание папки
-        const folderName = title.replace(/\s/g, '_');
+        const folderName = (0, domain_1.makeFolderName)(title);
         const pathToPublic = path.join(__dirname, "..", "..", "..", "public");
         if (!fs.existsSync(pathToPublic)) {
             fs.mkdirSync(pathToPublic);

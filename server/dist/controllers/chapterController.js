@@ -51,7 +51,7 @@ class chapterController {
                 // парсинг журнала
                 const journalId = req.body.journalId;
                 if (!journalId) {
-                    throw new Error("не указано имя или id журнала");
+                    throw new Error('не указано имя или id журнала ("journalId" не найдено)');
                 }
                 const journal = yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
                     .findOne({
@@ -70,7 +70,7 @@ class chapterController {
                 // получение файлов -> страниц главы
                 const pages = (_a = req.files) === null || _a === void 0 ? void 0 : _a.pages;
                 if (!pages)
-                    throw new Error('нужно добавить страницы');
+                    throw new Error('нужно добавить страницы ("pages" не найдено)');
                 // проверка путей
                 const pathToPublic = path.join(__dirname, "..", "..", "public");
                 if (!pathToPublic) {
@@ -137,7 +137,7 @@ class chapterController {
                 if (!journal) {
                     throw new Error("журнала с таким id не существует");
                 }
-                const journalFolderName = journal.title.replace(/\s/g, '_');
+                const journalFolderName = (0, domain_1.makeFolderName)(journal.title);
                 // удаление файлов
                 const pathToChapter = path.join(__dirname, '..', '..', 'public', journalFolderName, chapterFolderName);
                 if (!fs.existsSync(pathToChapter)) {

@@ -12,7 +12,7 @@ import { makeFolder, processGenres, processAuthors }
 import { handleAddAuthor, handleAddGenre, 
         handleRemoveAuthor, handleRemoveGenre } 
         from "./journalServices/editGenresAuthors"
-import { CustomFileType } from "../domain"
+import { CustomFileType, makeFolderName } from "../domain"
 
 
 class journalController {
@@ -64,7 +64,7 @@ class journalController {
             const journal: Journal | null = await dataSource.getRepository(Journal)
                                         .findOne({where: {id: journalId}})
             if (!journal) throw new Error('журнала с таким id не существует')
-            const journalFolderName: string = journal.title.replace(/\s/g, '_')
+            const journalFolderName: string = makeFolderName(journal.title)
 
             // удаление файлов
             const pathToJournal: string = path.join(__dirname, '..', '..', 'public', journalFolderName)
@@ -84,12 +84,17 @@ class journalController {
 
     async getOne(req: Request, res: Response, next: NextFunction) : Promise<void> {
         try {
-            const journalId: string = req.params.journalId
+            const journalId: string = req.params.id
+            
+            if (!journalId) {
+                throw new Error("something goes wrong with journal id parameter (undefined)");
+            }
+            
             const journal: Journal | null = await dataSource.getRepository(Journal)
-                                    .findOne({
-                                            where: {id: journalId},
-                                            relations: {genres: true, authors: true, chapters: true}
-                                    })
+                                            .findOne({
+                                                    where: {id: journalId},
+                                                    relations: {genres: true, authors: true, chapters: true}
+                                            })
             if (!journal) throw new Error('журнал не найден')
 
             res.json(journal)
@@ -106,7 +111,7 @@ class journalController {
             const offset = limit * (page - 1)
             const journals: Journal[] = await dataSource.getRepository(Journal)
                                 .find({
-                                    relations: {genres: true, authors: true, chapters: true},
+                                    relations: {genres: true, authors: true, chapters: false},
                                     skip: offset,
                                     take: limit
                                 })

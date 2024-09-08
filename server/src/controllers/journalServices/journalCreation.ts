@@ -4,7 +4,7 @@ import { dataSource } from "../../app-data-source"
 import fileUpload from "express-fileupload"
 import * as fs from "fs"
 import * as path from "path"
-import { CustomFileType } from "../../domain"
+import { CustomFileType, makeFolderName } from "../../domain"
 
 
 export async function processGenres(genres: string): Promise<Genre[]> {
@@ -50,7 +50,7 @@ export async function processAuthors(authors: string): Promise<Author[]> {
 
 export async function makeFolder(title: string, coverImg: CustomFileType): Promise<void> {
     // создание папки
-    const folderName: string = title.replace(/\s/g, '_')
+    const folderName: string = makeFolderName(title)
     const pathToPublic: string = path.join(__dirname, "..", "..", "..", "public")
     if (!fs.existsSync(pathToPublic)) {
         fs.mkdirSync(pathToPublic)

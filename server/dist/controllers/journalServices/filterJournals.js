@@ -30,22 +30,6 @@ class filterService {
         this.limit = limit;
         this.offset = offset;
     }
-    getWithGenresAuthorsYear(rawGenres, rawAuthors, year) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const genres = JSON.parse(rawGenres);
-            const authors = JSON.parse(rawAuthors);
-            return yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
-                .find({ where: {
-                    genres: { name: (0, typeorm_1.In)(genres) },
-                    authors: { name: (0, typeorm_1.In)(authors) },
-                    year: year
-                },
-                relations: { genres: true, authors: true },
-                skip: this.offset,
-                take: this.limit
-            });
-        });
-    }
     getWithGenresAuthors(rawGenres, rawAuthors) {
         return __awaiter(this, void 0, void 0, function* () {
             const genres = JSON.parse(rawGenres);
@@ -55,35 +39,7 @@ class filterService {
                     genres: { name: (0, typeorm_1.In)(genres) },
                     authors: { name: (0, typeorm_1.In)(authors) }
                 },
-                relations: { genres: true, authors: true },
-                skip: this.offset,
-                take: this.limit
-            });
-        });
-    }
-    getWithGenresYear(rawGenres, year) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const genres = JSON.parse(rawGenres);
-            return yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
-                .find({ where: {
-                    genres: { name: (0, typeorm_1.In)(genres) },
-                    year: year
-                },
-                relations: { genres: true, authors: true },
-                skip: this.offset,
-                take: this.limit
-            });
-        });
-    }
-    getWithAuthorsYear(rawAuthors, year) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const authors = JSON.parse(rawAuthors);
-            return yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
-                .find({ where: {
-                    authors: { name: (0, typeorm_1.In)(authors) },
-                    year: year
-                },
-                relations: { genres: true, authors: true },
+                relations: { genres: true, authors: true, chapters: false },
                 skip: this.offset,
                 take: this.limit
             });
@@ -96,7 +52,7 @@ class filterService {
                 .find({ where: {
                     authors: { name: (0, typeorm_1.In)(authors) }
                 },
-                relations: { genres: true, authors: true },
+                relations: { genres: true, authors: true, chapters: false },
                 skip: this.offset,
                 take: this.limit
             });
@@ -109,17 +65,7 @@ class filterService {
                 .find({ where: {
                     genres: { name: (0, typeorm_1.In)(genres) }
                 },
-                relations: { genres: true, authors: true },
-                skip: this.offset,
-                take: this.limit
-            });
-        });
-    }
-    getWithYear(year) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
-                .find({ where: { year: year },
-                relations: { genres: true, authors: true },
+                relations: { genres: true, authors: true, chapters: false },
                 skip: this.offset,
                 take: this.limit
             });
@@ -130,7 +76,7 @@ class filterService {
             console.error("getAll request, no filter data. use GET ..api/journals/");
             return yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
                 .find({
-                relations: { genres: true, authors: true },
+                relations: { genres: true, authors: true, chapters: false },
                 skip: this.offset,
                 take: this.limit
             });
@@ -147,40 +93,32 @@ function handleFilterData(req, res, next) {
             const rawGenres = req.body.genres;
             const rawAuthors = req.body.authors;
             const year = req.body.year;
-            const upperYear = req.body.upperYear;
-            const lowerYear = req.body.lowerYear;
-            if (year && upperYear || year && lowerYear) {
-                throw new Error("укажите только один тип фильтрации по году: год ИЛИ годовой промежуток");
+            let upperYear = req.body.upperYear;
+            let lowerYear = req.body.lowerYear;
+            if (year) { // if year exists, these entities will overlap
+                upperYear = year;
+                lowerYear = year;
             }
             let response;
-            if (rawGenres && rawAuthors && year) { // genres & authors & year
-                response = yield service.getWithGenresAuthorsYear(rawGenres, rawAuthors, year);
-            }
-            else if (rawGenres && rawAuthors && !year) { // genres & authors
+            if (rawGenres && rawAuthors) { // genres & authors
                 response = yield service.getWithGenresAuthors(rawGenres, rawAuthors);
             }
-            else if (rawGenres && !rawAuthors && year) { // genres & year
-                response = yield service.getWithGenresYear(rawGenres, year);
-            }
-            else if (!rawGenres && rawAuthors && year) { // authors & year
-                response = yield service.getWithAuthorsYear(rawAuthors, year);
-            }
-            else if (rawGenres && !rawAuthors && !year) { // genres
+            else if (rawGenres && !rawAuthors) { // genres
                 response = yield service.getWithGenres(rawGenres);
             }
-            else if (!rawGenres && rawAuthors && !year) { // authors
+            else if (!rawGenres && rawAuthors) { // authors
                 response = yield service.getWithAuthors(rawAuthors);
             }
-            else if (!rawGenres && !rawAuthors && year) { // year
-                response = yield service.getWithYear(year);
-            }
-            else { // all (better use GET getAll)
+            else { // all (better use GET request)
                 response = yield service.getAll();
             }
-            if (lowerYear) {
+            if (lowerYear && upperYear) {
+                response.filter(j => j.year >= lowerYear && j.year <= upperYear);
+            }
+            else if (lowerYear && !upperYear) {
                 response.filter(j => j.year >= lowerYear);
             }
-            if (upperYear) {
+            else if (!lowerYear && upperYear) {
                 response.filter(j => j.year <= upperYear);
             }
             res.json(response);

@@ -16,13 +16,14 @@ interface IChapterCreation {
 }
 
 class chapterController {
-    async create(req: Request, res: Response, next: NextFunction) {
+
+    async create(req: Request, res: Response, next: NextFunction) : Promise<void> {
         // journalId, pages(files), chapterName
         try {
             // парсинг журнала
             const journalId: string | undefined = req.body.journalId
             if (!journalId) {
-                throw new Error("не указано имя или id журнала")
+                throw new Error('не указано имя или id журнала ("journalId" не найдено)')
             }
             const journal: Journal | null = await dataSource.getRepository(Journal)
                                             .findOne({
@@ -42,7 +43,7 @@ class chapterController {
 
             // получение файлов -> страниц главы
             const pages: CustomFileType = req.files?.pages
-            if (!pages) throw new Error('нужно добавить страницы')
+            if (!pages) throw new Error('нужно добавить страницы ("pages" не найдено)')
 
             // проверка путей
             const pathToPublic: string = path.join(__dirname, "..", "..", "public")
@@ -89,7 +90,7 @@ class chapterController {
         }
     }
 
-    async delete(req: Request, res: Response, next: NextFunction) {
+    async delete(req: Request, res: Response, next: NextFunction) : Promise<void> {
         try { // chapterId, journalId
             // парсинг главы
             const chapterId: string = req.body.chapterId
@@ -113,7 +114,7 @@ class chapterController {
             if (!journal) {
                 throw new Error("журнала с таким id не существует")
             }
-            const journalFolderName: string = journal.title.replace(/\s/g, '_')
+            const journalFolderName: string = makeFolderName(journal.title)
 
             // удаление файлов
             const pathToChapter: string = path.join(__dirname, '..', '..', 'public', journalFolderName, chapterFolderName)

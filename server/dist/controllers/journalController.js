@@ -43,6 +43,7 @@ const processApiError_1 = __importDefault(require("../error/processApiError"));
 const filterJournals_1 = require("./journalServices/filterJournals");
 const journalCreation_1 = require("./journalServices/journalCreation");
 const editGenresAuthors_1 = require("./journalServices/editGenresAuthors");
+const domain_1 = require("../domain");
 class journalController {
     create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -92,7 +93,7 @@ class journalController {
                     .findOne({ where: { id: journalId } });
                 if (!journal)
                     throw new Error('журнала с таким id не существует');
-                const journalFolderName = journal.title.replace(/\s/g, '_');
+                const journalFolderName = (0, domain_1.makeFolderName)(journal.title);
                 // удаление файлов
                 const pathToJournal = path.join(__dirname, '..', '..', 'public', journalFolderName);
                 fs.rmSync(pathToJournal, { recursive: true, force: true });
@@ -110,7 +111,10 @@ class journalController {
     getOne(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const journalId = req.params.journalId;
+                const journalId = req.params.id;
+                if (!journalId) {
+                    throw new Error("something goes wrong with journal id parameter (undefined)");
+                }
                 const journal = yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
                     .findOne({
                     where: { id: journalId },
@@ -133,7 +137,7 @@ class journalController {
                 const offset = limit * (page - 1);
                 const journals = yield app_data_source_1.dataSource.getRepository(journal_entity_1.Journal)
                     .find({
-                    relations: { genres: true, authors: true, chapters: true },
+                    relations: { genres: true, authors: true, chapters: false },
                     skip: offset,
                     take: limit
                 });
