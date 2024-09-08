@@ -28,7 +28,7 @@
 Порт находится в .env файле (5001)
 <br>
 
-#### /users
+### /users
 
 * <b style="color: orange; ">POST</b> <b>/registration</b>
 
@@ -101,7 +101,7 @@
     </table>
 <br>
 
-#### /journals
+### /journals
 
 Genre entity:
 ```
@@ -241,7 +241,7 @@ Journal entity:
 
 <br>
 
-#### /chapters
+### /chapters
 
 Chapter entity:
 ```
